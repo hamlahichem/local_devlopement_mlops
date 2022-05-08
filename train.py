@@ -29,11 +29,13 @@ import matplotlib.cm as cm
 
 #/*train_df, validation_df,batch_size = 32, image_size = (224,224) */
 
-def train():
-  train_df=pd.read_csv('train_df.csv')
-  validation_df=pd.read_csv('validation_df.csv')
-  train_path = '/content/PlantVillage/train'
-  validation_path = '/content/PlantVillage/val'
+def train( train_path= 'small_dataset/train', validation_path= 'small_dataset/val', batch_size= 10,
+           image_size= (224,224), learning_rate= 1e-3, momentum=0.9, loss='categorical_crossentropy', metrics = ['accuracy']
+           ,nbr_epochs= 1 ) :
+
+  """
+  train_path = 'small_dataset/train'
+  validation_path = 'small_dataset/val'
   batch_size = 10
   image_size = (224,224)
   learning_rate=1e-3
@@ -41,6 +43,7 @@ def train():
   loss='categorical_crossentropy' 
   metrics = ['accuracy']
   nbr_epochs = 1
+  """ 
 #-----
 
   train_datagen = ImageDataGenerator(rescale=1./255)
@@ -77,7 +80,7 @@ def train():
 
   # visualize the model
   #print(model.summary())
-  plot_model(model, show_shapes=True, show_layer_names=False)
+#  plot_model(model, show_shapes=True, show_layer_names=False)
 
 
 
