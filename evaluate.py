@@ -65,13 +65,11 @@ def evaluate(model_path="./my_model.h5",validation_path= 'small_dataset/val', ba
     results = np.array(results)
     predicted_labels_idx = np.argmax(results,axis=1)
     predicted_labels_names = np.array([Classes_names[label] for label in predicted_labels_idx])
-    print("predicted_labels_names.shape: ",predicted_labels_names.shape)
- 
+  
     # get the real label of validation dataset
     real_labels_idx = validation_generator.labels
     real_labels_names = np.array([Classes_names[label] for label in real_labels_idx])
-    print("real_labels_names.shape: ",real_labels_names.shape)
-
+ 
     print("------------------------classification report--------------------------")
     print(classification_report(real_labels_names,predicted_labels_names,labels=Classes_names))
 
@@ -95,7 +93,7 @@ if __name__ == '__main__':
     with open("parameters.json") as f:
       pars = json.load(f)
       eval_args = pars["evaluation"]
-  
+    print("your paramater loaded form paramaters.json: ")
     print(eval_args)
     
     validation_path= eval_args["validation_path" ]#'small_dataset/val'
@@ -104,8 +102,7 @@ if __name__ == '__main__':
     model_path= eval_args["model_path"] #model_path"my_model.h5"
     # load models
     model = load_model(model_path)
-    print(model_path ,validation_path , batch_size , image_size )
-
+ 
     evaluate(model_path ,validation_path , batch_size , image_size )
 
 
