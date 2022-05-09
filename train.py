@@ -11,6 +11,7 @@ from tensorflow.keras.preprocessing.image import load_img,img_to_array,array_to_
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras import optimizers
 from tensorflow.keras.utils import plot_model
+import json
 
 import glob
 import os
@@ -23,29 +24,25 @@ import seaborn as sn
 import random
 import matplotlib.cm as cm
 
+def string_to_tuple(txt):
+    txt=txt.replace("(", "")
+    txt=txt.replace(")", "")
+    txt=txt.replace(" ", "")
+    txt= txt.split(",")
+    t=[]
+    for i in txt:
+	    t.append(int(i))
+    
+    t=tuple(t)
+    return t
 
 
-
-
-#/*train_df, validation_df,batch_size = 32, image_size = (224,224) */
 
 def train( train_path= 'small_dataset/train', validation_path= 'small_dataset/val', batch_size= 10,
            image_size= (224,224), learning_rate= 1e-3, momentum=0.9, loss='categorical_crossentropy', metrics = ['accuracy']
            ,nbr_epochs= 1 ) :
-
-  """
-  train_path = 'small_dataset/train'
-  validation_path = 'small_dataset/val'
-  batch_size = 10
-  image_size = (224,224)
-  learning_rate=1e-3
-  momentum=0.9
-  loss='categorical_crossentropy' 
-  metrics = ['accuracy']
-  nbr_epochs = 1
-  """ 
-#-----
-
+ 
+  
   train_datagen = ImageDataGenerator(rescale=1./255)
   train_generator = train_datagen.flow_from_directory(
                   train_path,
@@ -70,18 +67,10 @@ def train( train_path= 'small_dataset/train', validation_path= 'small_dataset/va
   #Adding New Layers
   x = base_model.output
   x = GlobalAveragePooling2D()(x)
-       #x = Dense(512, activation='relu')(x)
   x = Dropout(0.3)(x)
   x = Dense(256, activation='relu')(x)
   predictions = Dense(class_number, activation='softmax')(x)
   model = Model(base_model.input, predictions)
-
-
-
-  # visualize the model
-  #print(model.summary())
-#  plot_model(model, show_shapes=True, show_layer_names=False)
-
 
 
   #Compiling the Model
@@ -90,7 +79,6 @@ def train( train_path= 'small_dataset/train', validation_path= 'small_dataset/va
 
 
   # Train the model
-
   history=model.fit(train_generator,
           epochs=nbr_epochs,
           validation_data=validation_generator
@@ -98,7 +86,26 @@ def train( train_path= 'small_dataset/train', validation_path= 'small_dataset/va
 
 if __name__ == '__main__':
 
-  train()
+  with open("parameters.json") as f:
+      pars = json.load(f)
+      train_args = pars["training"]
+  
+  print(train_args)
+  
+  train_path= train_args["train_path"] 
+  validation_path = train_args["validation_path"] 
+  batch_size = train_args["batch_size"] 
+  image_size= string_to_tuple (train_args["image_size"] ) 
+  learning_rate = train_args["learning_rate"] 
+  momentum =train_args["momentum"] 
+  loss =train_args["loss"] 
+  metrics = train_args["metrics"] 
+  nbr_epochs =train_args["nbr_epochs"] 
+
+
+    
+  train(train_path , validation_path , batch_size , image_size , learning_rate , momentum  , loss  , metrics ,nbr_epochs)
+
 
 
 
