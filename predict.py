@@ -2,8 +2,7 @@ from tensorflow.keras.models import Model,load_model
 from tensorflow.keras.preprocessing.image import load_img,img_to_array,array_to_img
 import numpy as np
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-
-
+import json
 
 def prepare_image_for_prediction(img_path, size = (224,224)):
     # `img` is a PIL image of size 
@@ -39,9 +38,15 @@ def load_model(target_dir="models/my_model.h5"):
     return model
 """
 if __name__ == "__main__":
+    
+    with open("parameters.json") as f:
+      pars = json.load(f)
+      pr_args = pars["predict"]
+    print("your paramater loaded form paramaters.json: ")
+    print(pr_args)
 
-    target_dir="models/my_model.h5"
-    image_path="small_dataset/val/Apple___Apple_scab/8df36a92-b562-4bff-975b-ff08d8da40f6___FREC_Scab 3119.JPG"
+    target_dir= pr_args["target_dir"]  
+    image_path= pr_args ["image_path"] 
 
     Classes_names_list=get_list_class()# predict class give index and we use the list name classe to get the label    
     model= load_model(target_dir)

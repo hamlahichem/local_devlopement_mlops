@@ -24,8 +24,10 @@
     },
 
 
-    "scoring":
+    "predict":
     {
+      "target_dir"  : "my_model.h5",
+      "image_path"  :"small_dataset/val/Apple___Apple_scab/8df36a92-b562-4bff-975b-ff08d8da40f6___FREC_Scab 3119.JPG"
         
     }
 }
