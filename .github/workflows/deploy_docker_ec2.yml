@@ -4,12 +4,12 @@ name: deploy_docker_ec2
 on:
    push:
     branches: [ "master" ]
-  pull_request:
+   pull_request:
     branches: [ "master" ]
 
    workflow_dispatch:
 
- jobs:
+jobs:
    pull_image:
      runs-on: ubuntu-latest
 
@@ -17,9 +17,9 @@ on:
        - uses: actions/checkout@v3
 
        - name: Run a one-line script
-        run: echo Hello, world!
+         run: echo Hello, world!
 
        - name: Run a multi-line script
-        run: |
+         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
