@@ -16,8 +16,10 @@ jobs:
      steps:
        - uses: actions/checkout@v3
 
-       - name: Run a one-line script
-         run: echo Hello, world!
+       - name: docker login
+         env: 
+            docker_user: ${{ secrets.DOCKERHUB_USERNAME}}
+         run: echo Hello $docker_user , world!
 
        - name: Run a multi-line script
          run: |
