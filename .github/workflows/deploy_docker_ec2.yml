@@ -8,7 +8,11 @@ on:
     branches: [ "master" ]
 
    workflow_dispatch:
-
+   
+env: 
+   docker_user: ${{ secrets.DOCKERHUB_USERNAME}}
+   docker_password: ${{ secrets.DOCKERHUB_PASSWORD}}
+   
 jobs:
    pull_image:
      runs-on: ubuntu-latest
@@ -17,14 +21,10 @@ jobs:
        - uses: actions/checkout@v3
 
        - name: docker login
-         env: 
-            docker_user: ${{ secrets.DOCKERHUB_USERNAME}}
-            docker_password: ${{ secrets.DOCKERHUB_PASSWORD}}
          run: |
             sudo docker login -u $docker_user -p $docker_password
-            echo Hello $docker_user , world!
 
-       - name: Run a multi-line script
-         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+       - name: pull MLflow server image
+         run: 
+          sudo docker pull scbnf99/mlflow:latest
+          sudo docker images
