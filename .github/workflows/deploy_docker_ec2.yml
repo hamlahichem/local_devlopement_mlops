@@ -28,3 +28,14 @@ jobs:
          run: |
           sudo docker pull scbnf99/mlflow:latest
           sudo docker images
+       - name: pull MLflow server image
+         run: |
+          sudo docker pull nginx
+          sudo docker images
+
+       - name: run docker image
+         run: |
+          sudo docker run -di --name nginx_server -p 8080:80 nginx  
+          curl http://127.0.0.1:8080/
+
+         
