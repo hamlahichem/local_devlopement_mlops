@@ -25,6 +25,6 @@ jobs:
             sudo docker login -u $docker_user -p $docker_password
 
        - name: pull MLflow server image
-         run: 
+         run: |
           sudo docker pull scbnf99/mlflow:latest
           sudo docker images
