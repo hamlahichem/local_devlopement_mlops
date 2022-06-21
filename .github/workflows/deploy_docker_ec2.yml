@@ -32,7 +32,7 @@ jobs:
 #          sudo docker images
        - name: pull MLflow server image
          run: |
-          sudo docker pull hello-world nginx
+          sudo docker pull nginx
           sudo docker images
 
        - name: run docker image
