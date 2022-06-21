@@ -14,8 +14,10 @@ env:
    docker_password: ${{ secrets.DOCKERHUB_PASSWORD}}
    
 jobs:
+   
    pull_image:
-     runs-on: ubuntu-latest
+      #runs-on: ubuntu-latest
+     runs-on: [self-hosted, linux, x64 ]
 
      steps:
        - uses: actions/checkout@v3
